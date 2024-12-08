@@ -1,0 +1,30 @@
+.ManagerPage {
+    margin-top: 32px;
+}
+
+.manager-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.chart-container {
+    width: 100%;
+    text-align: center;
+}
+
+.download-btn {
+    background: linear-gradient(90deg, #1e90ff, #00bfff); /* Blueish gradient */
+    color: white;
+    padding: 12px 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 8px; /* Added rounded corners for better style */
+}
+
+.download-btn:hover {
+    background: linear-gradient(90deg, #00bfff, #1e90ff); /* Reverse gradient on hover */
+}

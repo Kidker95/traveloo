@@ -1,0 +1,100 @@
+# Any app we need to dockerize:
+services:
+
+  # Our database service: 
+  database-service:
+
+    # Image name:
+    image: kidker95/traveloo-mongodb-image:1.0
+
+    # Dockerfile location:
+    build: ./Database
+
+    # Container name: 
+    container_name: traveloo-mongodb-container
+
+    # When container stops - what to do:
+    restart: unless-stopped
+
+    # Volumes: 
+    volumes:
+      - mongodb-volume:/data/db
+
+
+    # Check every 5 seconds if db is up and running:
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s # Time to wait beteen checks.
+      timeout: 5s # Time to wait until current check considered as failed.
+      retries: 24
+
+  # -----------------------------------------------------------------------
+
+  # Our backend service:
+  backend-service:
+     
+    # Wait until database healthcheck success and then start: 
+    depends_on:
+      database-service:
+        condition: service_healthy
+
+    # Image name:
+    image: kidker95/traveloo-backend-image:1.0
+
+    # Dockerfile location:
+    build: ./Backend
+
+    # Container name: 
+    container_name: traveloo-backend-container
+
+    # Port mapping:
+    ports:
+      - 4100:4000
+
+    # When container stops - what to do:
+    restart: unless-stopped
+
+    # Volumes: 
+    volumes:
+      - ./Backend/src:/app/src # Host volume to src folder - this is a hot reloading trick
+
+    environment: 
+      MONGODB_CONNECTION_STRING: mongodb://Omri:Shachar@database-service:27017/traveloo
+
+
+   
+  # -----------------------------------------------------------------------
+
+  # Our frontend service:
+  frontend-service:
+
+    # Wait for: 
+    depends_on:
+      - backend-service
+
+    # Image name: 
+    image: kidker95/traveloo-frontend-image:1.0
+
+    # Dockerfile location: 
+    build: ./Frontend
+
+    # Container name: 
+    container_name: traveloo-frontend-container
+
+    # Port mapping: 
+    ports:
+      - 3100:3000
+
+    # When container stops - what to do:
+    restart: unless-stopped
+
+    # Volumes: 
+    volumes:
+      - ./Frontend/src:/app/src # Host volume to src folder - this is a hot reloading trick
+
+# -----------------------------------------------------------------------
+
+# List all named volumes:
+volumes:
+  mongodb-volume:
+

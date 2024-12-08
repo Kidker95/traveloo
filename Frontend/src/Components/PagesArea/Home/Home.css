@@ -1,0 +1,159 @@
+.Home {
+    font-family: Arial, sans-serif;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.Home > * {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards;
+    animation-delay: 0.2s;
+}
+
+.hero {
+    background: linear-gradient(135deg, #4790D9, #5ec2ff);
+    color: white;
+    padding: 60px 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    animation-delay: 0.2s; /* Hero appears first */
+}
+
+.hero h1 {
+    font-size: 4rem; /* HUGE font size */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero .highlight {
+    color: #ffeb3b;
+}
+
+.hero p {
+    margin: 20px 0;
+    font-size: 1.2rem;
+}
+
+.primary-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Featured Vacations */
+.featured-vacations {
+    margin-bottom: 40px;
+    animation-delay: 0.4s; /* Appears after hero */
+}
+
+.featured-vacations h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.vacations-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.vacation-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards;
+    animation-delay: 0.5s; /* Staggered appearance */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vacation-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.vacation-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.vacation-card-content {
+    padding: 16px;
+}
+
+/* Why Choose Us */
+.why-choose-us {
+    background: #f9f9f9;
+    padding: 40px 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    animation-delay: 0.6s; /* Appears after featured vacations */
+}
+
+.why-choose-us h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards;
+    animation-delay: 0.7s; /* Staggered appearance */
+}
+
+/* Call to Action */
+.cta {
+    animation-delay: 0.8s; /* Appears last */
+}
+
+.cta h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}

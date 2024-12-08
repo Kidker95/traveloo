@@ -1,0 +1,62 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: linear-gradient(90deg, #4790D9, #00bfff);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Arial", sans-serif;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Adjusted for better spacing */
+    cursor: pointer;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color:#ffeb3b
+}
+
+.logo-icon img {
+    width: 50px; /* Restrict the GIF size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: Adds slight rounding to the edges */
+    object-fit: contain; /* Prevent distortion */
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navigation .greeting {
+    margin-right: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffeb3b; /* Highlighted text */
+}
+
+.navigation button {
+    text-transform: capitalize;
+    font-weight: bold;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 8px 12px; /* Set consistent padding */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.navigation button:hover {
+    color: #ffeb3b;
+    background: rgba(255, 255, 255, 0.2);
+}
