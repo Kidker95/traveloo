@@ -48,14 +48,15 @@ class UserController {
 
     private async login(request: Request, response: Response, next: NextFunction): Promise<void> {
         try {
+            
             const credentials = new CredentialsModel(request.body);
-
+            
             // Ensure required fields are present
             if (!credentials.email || !credentials.password) {
                 response.status(StatusCode.BadRequest).send("Missing email or password");
                 return;
             }
-
+            
             const token = await userService.login(credentials);
             response.status(StatusCode.OK).json(token);
         } catch (err) { next(err); }

@@ -49,14 +49,14 @@ services:
 
     # Port mapping:
     ports:
-      - 4100:4000
+      - 4000:4000
 
     # When container stops - what to do:
     restart: unless-stopped
 
     # Volumes: 
     volumes:
-      - ./Backend/src:/app/src # Host volume to src folder - this is a hot reloading trick
+      - ./Backend/src:/app/src 
 
     environment: 
       MONGODB_CONNECTION_STRING: mongodb://Omri:Shachar@database-service:27017/traveloo
@@ -83,14 +83,14 @@ services:
 
     # Port mapping: 
     ports:
-      - 3100:3000
+      - 3000:3000
 
     # When container stops - what to do:
     restart: unless-stopped
 
     # Volumes: 
     volumes:
-      - ./Frontend/src:/app/src # Host volume to src folder - this is a hot reloading trick
+      - ./Frontend/src:/app/src 
 
 # -----------------------------------------------------------------------
 

@@ -9,7 +9,7 @@ COPY package.json /app
 
 # React environment variables: 
 ENV REACT_APP_ENVIRONMENT=development
-ENV REACT_APP_BASE_URL=http://localhost:4100/
+ENV REACT_APP_BASE_URL=http://localhost:4000/
 
 # Install node_modules:
 RUN npm i 

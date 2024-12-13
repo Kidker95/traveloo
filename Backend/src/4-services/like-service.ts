@@ -22,9 +22,10 @@ class LikeService {
         // Calculate the updated likes count dynamically
         const updatedLikesCount = await this.getLikesCountForVacation(vacationId);
     
-        // Return the updated likes count (optional, for client-side updates)
+        // Return the updated likes count
         return updatedLikesCount;
     }
+    
     
 }
 

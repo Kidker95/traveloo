@@ -80,19 +80,35 @@ export function VacationCard(): JSX.Element {
             if (!notStartedToggle) {
                 const notStartedVacations = await vacationService.getVacationsNotStarted();
                 const sortedNotStartedVacations = sortVacationsByStartDate(notStartedVacations);
+    
                 dispatch(vacationAction.initVacation(sortedNotStartedVacations));
-                setOngoingToggle(false); // Ensure ongoing is disabled
+    
+                if (user && user._id) {
+                    const liked = await vacationService.getLikedVacations(user);
+                    setLikedVacations(liked.map((v) => v._id));
+                }
+    
+                setOngoingToggle(false); 
             } else {
                 const allVacations = await vacationService.getAllVacations();
                 const sortedAllVacations = sortVacationsByStartDate(allVacations);
+    
                 dispatch(vacationAction.initVacation(sortedAllVacations));
+    
+               
+                if (user && user._id) {
+                    const liked = await vacationService.getLikedVacations(user);
+                    setLikedVacations(liked.map((v) => v._id));
+                }
             }
-            setNotStartedToggle(!notStartedToggle);
+    
+            setNotStartedToggle(!notStartedToggle); 
         } catch (err: any) {
             console.log(err);
             notify.error(err.message);
         }
     };
+    
     
     const handleToggleOngoing = async () => {
         try {
@@ -100,7 +116,7 @@ export function VacationCard(): JSX.Element {
                 const ongoingVacations = await vacationService.getVacationsOngoing();
                 const sortedOngoingVacations = sortVacationsByStartDate(ongoingVacations);
                 dispatch(vacationAction.initVacation(sortedOngoingVacations));
-                setNotStartedToggle(false); // Ensure not started is disabled
+                setNotStartedToggle(false); 
             } else {
                 const allVacations = await vacationService.getAllVacations();
                 const sortedAllVacations = sortVacationsByStartDate(allVacations);
@@ -123,7 +139,7 @@ export function VacationCard(): JSX.Element {
             if (!sure) return;
             await vacationService.deleteVacation(vacation._id);
             notify.success("Vacation deleted!");
-            // Remove from global state
+            
             dispatch(vacationAction.deleteVacation(vacation._id));
         } catch (err: any) {
             notify.error(err || "Can't delete vacation");
@@ -136,34 +152,39 @@ export function VacationCard(): JSX.Element {
                 notify.error("You need to log in to like a vacation.");
                 return;
             }
-
+    
             const like: LikeModel = {
                 userId: user._id,
                 vacationId: vacation._id,
             };
-
+    
             await vacationService.toggleLike(like);
-
-            // Optimistically update the liked vacations state locally
+    
             setLikedVacations((prev) =>
                 prev.includes(vacation._id)
-                    ? prev.filter((id) => id !== vacation._id) // Unlike
-                    : [...prev, vacation._id] // Like
+                    ? prev.filter((id) => id !== vacation._id) 
+                    : [...prev, vacation._id] 
             );
-
-            // Update Redux state for likes count
-            const updatedLikesCount =
-                vacations.find((v) => v._id === vacation._id)?.likesCount || 0;
-            dispatch(
-                vacationAction.toggleLikeVacation({
-                    vacationId: vacation._id,
-                    likesCount: vacation.likesCount + (likedVacations.includes(vacation._id) ? -1 : 1), // Adjust the count
-                })
-            );
+    
+            
+            if (likedToggle) {
+                const likedVacations = await vacationService.getLikedVacations(user);
+                const sortedLikedVacations = sortVacationsByStartDate(likedVacations);
+                dispatch(vacationAction.initVacation(sortedLikedVacations)); 
+            } else {
+                
+                dispatch(
+                    vacationAction.toggleLikeVacation({
+                        vacationId: vacation._id,
+                        likesCount: vacation.likesCount + (likedVacations.includes(vacation._id) ? -1 : 1),
+                    })
+                );
+            }
         } catch (err: any) {
             notify.error(err.message || "Failed to toggle like");
         }
     };
+    
 
     const vacationsPerPage = 9;
     const totalPages = Math.ceil(vacations.length / vacationsPerPage);

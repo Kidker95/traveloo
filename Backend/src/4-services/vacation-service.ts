@@ -56,11 +56,9 @@ class VacationService {
         vacation.photoName = newPhotoName
 
         const dbVacation = await VacationModel.findByIdAndUpdate(vacation._id, vacation, { returnOriginal: false }).exec();
-        if(!dbVacation) throw new NotFoundError(`_id ${vacation._id} not found`);
+        if (!dbVacation) throw new NotFoundError(`_id ${vacation._id} not found`);
         return dbVacation;
     }
-
-
 
     public async deleteVacation(_id: string): Promise<void> {
         const dbVacation = await VacationModel.findById(_id).exec();
@@ -79,35 +77,32 @@ class VacationService {
 
 
     public async getLikedVacations(userId: Types.ObjectId): Promise<IVacationModel[]> {
-
         const likedVacations = await LikeModel.find({ userId }).exec();
+        const vacationIds = likedVacations.map((like) => like.vacationId);
 
-        const vacationIds = likedVacations.map(like => like.vacationId);
-
-        return VacationModel.find({ _id: { $in: vacationIds } }).exec();
+        // Fetch liked vacations and populate likesCount
+        return VacationModel.find({ _id: { $in: vacationIds } })
+            .populate("likesCount") 
+            .exec();
     }
+
 
     public async getVacationsNotStarted(): Promise<IVacationModel[]> {
         const today = new Date().toISOString().split('T')[0];
-        const upcomingVacations = await VacationModel.find({ startDate: { $gt: today } }).exec();
-        if (!upcomingVacations || upcomingVacations.length === 0) {
-            throw new NotFoundError("No vacations found that haven't started yet.");
-        }
-        return upcomingVacations;
+        return VacationModel.find({ startDate: { $gt: today } })
+            .populate("likesCount") 
+            .exec();
     }
 
     public async getVacationsOngoing(): Promise<IVacationModel[]> {
         const today = new Date().toISOString().split('T')[0];
-        const ongoingVacations = await VacationModel.find({
+        return VacationModel.find({
             startDate: { $lte: today },
             endDate: { $gte: today },
-        }).exec();
-
-        if (!ongoingVacations || ongoingVacations.length === 0) {
-            throw new NotFoundError("No vacations are currently ongoing.");
-        }
-        return ongoingVacations;
-    }
+        })
+            .populate("likesCount") 
+            .exec();
+    }    
 
     public async getLikesReport(): Promise<{ destination: string; likeCount: number }[]> {
         const results = await VacationModel.aggregate([

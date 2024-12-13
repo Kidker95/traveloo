@@ -39,7 +39,6 @@ class UserService {
 
     private initUser(token: string): void {
         const container = jwtDecode<{ user: UserModel }>(token);
-        console.log(container);
         const dbUser = container.user;
         const action = userActions.initUser(dbUser);
         store.dispatch(action);

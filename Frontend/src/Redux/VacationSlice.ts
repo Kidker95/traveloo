@@ -30,12 +30,17 @@ export function deleteVacation(currentState: VacationModel[], action: PayloadAct
 
 // ------------------------- Likes -------------------------
 
-export function toggleLikeVacation(currentState: VacationModel[], action: PayloadAction<{ vacationId: string; likesCount: number }>): void {
-    const vacation = currentState.find(v => v._id === action.payload.vacationId);
+export function toggleLikeVacation(
+    currentState: VacationModel[],
+    action: PayloadAction<{ vacationId: string; likesCount: number }>
+): void {
+    const vacation = currentState.find((v) => v._id === action.payload.vacationId);
     if (vacation) {
-        vacation.likesCount = action.payload.likesCount; // Update the likes count directly
+        // Update the likesCount directly with the value from the backend
+        vacation.likesCount = action.payload.likesCount;
     }
 }
+
 
 
 

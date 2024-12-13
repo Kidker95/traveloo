@@ -23,7 +23,7 @@ export function Header(): JSX.Element {
             {/* Logo */}
             <div className="logo">
                 <h1 onClick={() => navigate("/home")}>Traveloo</h1>
-                <span className="logo-icon"><img src={planeGif}/></span>
+                <span className="logo-icon"><img src={planeGif} alt="logo"/></span>
             </div>
 
             {/* Menu */}

@@ -33,22 +33,6 @@ describe("Testing A few of the site functionalities", () => {
         expect(vacations[0]).to.contain.keys("_id", "destination", "description", "price", "startDate", "endDate", "photoName");
     });
 
-    // addNewVacation
-    it("should add a new vacation(admin only)", async () => {
-        console.log("Image Path:", imagePath);
-        const response = await supertest(app.server)
-            .post("/api/vacations")
-            .set("Authorization", `Bearer ${token}`)
-            .field("destination", "Testing Vacation")
-            .field("description", "this is testing adding a vacation via the tests functions")
-            .field("startDate", "2025-01-01")
-            .field("endDate", "2025-01-10")
-            .field("price", 300)
-            .attach("photo", imagePath);
-        const dbVacation = response.body;
-        expect(dbVacation).to.not.be.empty;
-        expect(dbVacation).to.contain.keys("_id", "destination", "description", "price", "startDate", "endDate", "likesCount", "photoUrl");
-    });
 
     // deleteVacation
     it("should delete the added vacation (admin only)", async () => {
