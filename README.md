@@ -65,9 +65,6 @@ Traveloo is a full-stack web application that helps users explore and book vacat
 - Add vacations to your wishlist.
 - Book your dream vacation with a click!
 
-## Screenshots
-
-*(Add screenshots here to showcase Traveloo's features and design.)*
 
 ## Future Improvements
 
